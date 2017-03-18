@@ -9,7 +9,7 @@ raw_input("pre@opus3console:pre$")
 print "Hello, %s. Welcome to %s." % (user_name, script)
 print "Where do you live, %s?" % user_name
 lives= raw_input(prompt)
-def default_game()
+def default_game():
     roomx=0
     roomy=0
     roomxmax=2
