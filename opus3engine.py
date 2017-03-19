@@ -10,6 +10,19 @@ print "Hello, %s. Welcome to %s." % (user_name, script)
 print "Where do you live, %s?" % user_name
 lives= raw_input(prompt)
 def default_game():
+    global roomx
+    global roomy
+    global roomxmax
+    global roomxmin
+    global roomymax
+    global roomymin
+    global char_hp
+    global char_atk_divisor
+    global char_atk_max
+    global char_atk_min
+    global char_def_divisor
+    global char_def_max
+    global world
     roomx=0
     roomy=0
     roomxmax=2
@@ -25,7 +38,6 @@ def default_game():
     char_def_divisor=2
     world="Sunriseland"
 default_game()
-world="Sunriseland"
 print "Welcome to the world of %s" % world
 def opus3_engine():
     validDirection=False
