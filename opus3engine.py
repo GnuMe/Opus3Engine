@@ -73,7 +73,7 @@ if exists('.runbefore')==False:
     individual works permit. Inclusion of a covered work in an aggregate does 
     not cause this License to apply to the other parts of the aggregate.
 
-    CONVEYING NON-SOURCE CODE
+    CONVEYING NON-SOURCE CODE VERSIONS
 
     
     You may convey a covered work in object code form under the terms of 
@@ -199,7 +199,34 @@ def gameinit():
     char_def_divisor=2
     world="Sunriseland"
 def fight():
-    print "Nothing here yet..."
+    try:
+        print "You encountered a %s" % enemy
+    except:
+        enemy = "Nameless One"
+        print "You encountered a Nameless One!"
+    try:
+        print "%s has %d HP, %d to %d attack, and %d to %d defense." % (enemy, enem_hp,enem_atk_min/enem_atk_divisor,enem_atk_max/enem_atk_divisor,enem_def_min/enem_def_divisor, enem_def_max/enem_def_divisor)
+    except:
+        enem_hp=char_hp
+        enem_atk_min=char_atk_min
+        enem_atk_max=char_atk_max
+        enem_atk_divisor=char_atk_divisor
+        enem_def_divisor=char_def_divisor
+        enem_def_max=char_def_max
+        enem_def_min=char_def_min
+        print "Nameless One has 20 HP, 1 to 5 attack, and 0 to 1 defense."
+    firstturn=random.choice("char","enem")
+    while char_hp >= 1 and enem_hp >= 1:
+        if firstturn=="char":
+            enem_hp=enem_hp-(random.randint(char_atk_min, char_atk_max)/char_atk_divisor)
+            char_hp=char_hp-(random.randint(enem_atk_min, enem_atk_max)/enem_atk_divisor)
+        else:
+            char_hp=char_hp-(random.randint(enem_atk_min, enem_atk_max)/enem_atk_divisor)
+            enem_hp=enem_hp-(random.randint(char_atk_min, char_atk_max)/char_atk_divisor)
+    if char_hp <=1:
+        print "You lose. %s lives with %d HP remaining." % (enemy, enem_hp)
+    else:
+        print "You win, with %d HP remaining." % char_hp
 def game_coordoptions():
     print "No coordinate options set."
 gameinit()
