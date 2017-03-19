@@ -3,7 +3,8 @@
 import random
 from os.path import exists
 location='~'
-#FIXME: Make this firstrun only. This is the suggested way by the FSF to show
+#FIXME: Make this firstrun only and allow multiple inputs. Superlow priority.
+#This is the suggested way by the FSF to show
 #GPL info, pythonified and modified slightly.
 if exists('.runbefore')==False:
     with open(".runbefore","a+") as f:
@@ -197,12 +198,31 @@ def gameinit():
     char_def_max=2
     char_def_divisor=2
     world="Sunriseland"
+def fight():
+    print "Nothing here yet..."
+def game_coordoptions():
+    print "No coordinate options set."
 gameinit()
 print "Welcome to the world of %s" % world
 def opus3_engine():
+    global roomx
+    global roomy
+    global roomxmax
+    global roomxmin
+    global roomymax
+    global roomymin
+    global char_hp
+    global char_atk_divisor
+    global char_atk_max
+    global char_atk_min
+    global char_def_divisor
+    global char_def_max
+    global world
     validDirection=False
-    #FIXME: Add extra while statement to recur this and use coordinate-specific variables.
-    while validDirection==False:
+    #FIXME: Use coordinate-specific variables.
+    isOn=True
+    while char_hp>=1:
+        print "HP: %d" % char_hp
         print """
         w: up
         a: left
@@ -210,22 +230,36 @@ def opus3_engine():
         d: right
         Follow command with ENTER
         """
-        direction=raw_input(prompt)
-        location=roomx+','+roomy
-        if direction == w:
-            if roomx >= roomxmin and roomx <= roomxmax:
+        direction=raw_input(user_name+world+str(roomx)+','+str(roomy)+"$ ")
+        if direction == "w":
+            if roomx <= roomxmax:
                 roomx=roomx+1
                 validDirection=True
-        elif direction == a:
-            roomx=roomx-1
-            validDirection=True
-        elif direction == s:
-            roomy=roomy-1
-            validDirection=True
-        elif direction == d:
-            roomy=roomy+1
-            validDirection=True
+            else:
+                print "You slammed yourself into a wall."
+                char_hp=char_hp-1
+        elif direction == "a":
+            if roomx >= roomxmin:
+                roomx=roomx-1
+                validDirection=True
+            else:
+                print "You slammed yourself into a wall."
+                char_hp=char_hp-1
+        elif direction == "s":
+            if roomy >= roomymin:
+                roomy=roomy-1
+                validDirection=True
+            else:
+                print "You slammed yourself into a wall."
+                char_hp=char_hp-1
+        elif direction == "d":
+            if roomy <= roomymax:
+                roomy=roomy+1
+                validDirection=True
+            else:
+                print "You slammed yourself into a wall."
+                char_hp=char_hp-1
         else:
             print "Invalid."
-    location=roomx+','+roomy
-        
+    print "You died."
+opus3_engine()
