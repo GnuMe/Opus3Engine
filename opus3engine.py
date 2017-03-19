@@ -166,7 +166,6 @@ if exists('.runbefore')==False:
 print "What's your name?"
 user_name=raw_input("pre@opus3console:pre$ ")
 prompt=user_name+'@opus3console:'+location+"$ "
-lives= raw_input(prompt)
 def gameinit():
     #FIXME: Developers should not have to define every variable as global.
     #FIXME: Add coordinate-specific variables.
@@ -184,6 +183,10 @@ def gameinit():
     global char_def_divisor
     global char_def_max
     global world
+    global koboldDefeated #game specific
+    global gotKey #game specific
+    global gameDone
+    gameDone=False
     roomx=0
     roomy=0
     roomxmax=2
@@ -197,27 +200,55 @@ def gameinit():
     char_def_min=0
     char_def_max=2
     char_def_divisor=2
-    world="Sunriseland"
+    world="Opus 3 Demo"
+    #game specific variables
+    koboldDefeated=False
+    gotKey=False
+gameinit()
 def fight():
+    global roomx
+    global roomy
+    global roomxmax
+    global roomxmin
+    global roomymax
+    global roomymin
+    global char_hp
+    global char_atk_divisor
+    global char_atk_max
+    global char_atk_min
+    global char_def_divisor
+    global char_def_max
+    global char_def_min
+    global enemy
+    global enem_hp
+    global enem_atk_divisor
+    global enem_atk_max
+    global enem_atk_min
+    global enem_def_divisor
+    global enem_def_max
+    global enem_def_min
+    global world
     try:
         print "You encountered a %s" % enemy
     except:
+        print "An error occured. Enemy name set to fallback value."
         enemy = "Nameless One"
         print "You encountered a Nameless One!"
     try:
-        print "%s has %d HP, %d to %d attack, and %d to %d defense." % (enemy, enem_hp,enem_atk_min/enem_atk_divisor,enem_atk_max/enem_atk_divisor,enem_def_min/enem_def_divisor, enem_def_max/enem_def_divisor)
+        print "%s has %d HP, and %d to %d attack." % (enemy, enem_hp,enem_atk_min/enem_atk_divisor,enem_atk_max/enem_atk_divisor)
     except:
+        print "An error occured. Enemy stats were set to fallback values.."
         enem_hp=char_hp
         enem_atk_min=char_atk_min
         enem_atk_max=char_atk_max
         enem_atk_divisor=char_atk_divisor
         enem_def_divisor=char_def_divisor
         enem_def_max=char_def_max
-        enem_def_min=char_def_min
+        enem_def_min=0
         print "Nameless One has 20 HP, 1 to 5 attack, and 0 to 1 defense."
-    firstturn=random.choice("char","enem")
+    firstturn=random.randint(0,1)
     while char_hp >= 1 and enem_hp >= 1:
-        if firstturn=="char":
+        if firstturn==0:
             enem_hp=enem_hp-(random.randint(char_atk_min, char_atk_max)/char_atk_divisor)
             char_hp=char_hp-(random.randint(enem_atk_min, enem_atk_max)/enem_atk_divisor)
         else:
@@ -227,9 +258,51 @@ def fight():
         print "You lose. %s lives with %d HP remaining." % (enemy, enem_hp)
     else:
         print "You win, with %d HP remaining." % char_hp
-def game_coordoptions():
-    print "No coordinate options set."
-gameinit()
+def coordOptions():
+    global roomx
+    global roomy
+    global roomxmax
+    global roomxmin
+    global roomymax
+    global roomymin
+    global char_hp
+    global char_atk_divisor
+    global char_atk_max
+    global char_atk_min
+    global char_def_divisor
+    global char_def_max
+    global enemy
+    global enem_hp
+    global enem_atk_divisor
+    global enem_atk_max
+    global enem_atk_min
+    global enem_def_divisor
+    global enem_def_max
+    global enem_def_min
+    global world
+    global gotKey
+    global koboldDefeated
+    global gameDone
+    #Reference fight script
+    if roomx==1 and roomy==0 and koboldDefeated==False:
+        enemy="Kobold"
+        enem_hp=10
+        enem_atk_min=5
+        enem_atk_max=8
+        enem_atk_divisor=2
+        enem_def_min=0
+        enem_def_min=2
+        enem_def_divisor=1
+        fight()
+        koboldDefeated=True
+    #Reference quest
+    if roomx==0 and roomy==-3 and gotKey==False:
+        print "You found the key to the Warden's Chest!"
+        gotKey=True
+    if roomx==3 and roomy==2 and gotKey==True:
+        print "As you place the key into the keyhole, the dungeon wall"
+        print "crumbles and the town of Demolia is in front of you."
+        gameDone=True
 print "Welcome to the world of %s" % world
 def opus3_engine():
     global roomx
@@ -248,7 +321,7 @@ def opus3_engine():
     validDirection=False
     #FIXME: Use coordinate-specific variables.
     isOn=True
-    while char_hp>=1:
+    while char_hp>=1 and gameDone == False:
         print "HP: %d" % char_hp
         print """
         w: up
@@ -257,11 +330,12 @@ def opus3_engine():
         d: right
         Follow command with ENTER
         """
-        direction=raw_input(user_name+world+str(roomx)+','+str(roomy)+"$ ")
-        if direction == "w":
+        direction=raw_input(user_name+" in "+world+"("+str(roomx)+','+str(roomy)+")$ ")
+        if direction == "d":
             if roomx <= roomxmax:
                 roomx=roomx+1
                 validDirection=True
+                coordOptions()
             else:
                 print "You slammed yourself into a wall."
                 char_hp=char_hp-1
@@ -269,6 +343,7 @@ def opus3_engine():
             if roomx >= roomxmin:
                 roomx=roomx-1
                 validDirection=True
+                coordOptions()
             else:
                 print "You slammed yourself into a wall."
                 char_hp=char_hp-1
@@ -276,17 +351,22 @@ def opus3_engine():
             if roomy >= roomymin:
                 roomy=roomy-1
                 validDirection=True
+                coordOptions()
             else:
                 print "You slammed yourself into a wall."
                 char_hp=char_hp-1
-        elif direction == "d":
+        elif direction == "w":
             if roomy <= roomymax:
                 roomy=roomy+1
                 validDirection=True
+                coordOptions()
             else:
                 print "You slammed yourself into a wall."
                 char_hp=char_hp-1
         else:
             print "Invalid."
-    print "You died."
+    if char_hp <= 0:
+        print "You died."
+    else:
+        print "You won!"
 opus3_engine()
