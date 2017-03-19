@@ -3,9 +3,9 @@ import random
 from sys import argv
 script = argv
 location='~'
-prompt=user_name+'@opus3console:'+location+"$ "
 print "What's your name?"
-raw_input("pre@opus3console:pre$")
+user_name=raw_input("pre@opus3console:pre$")
+prompt=user_name+'@opus3console:'+location+"$ "
 print "Hello, %s. Welcome to %s." % (user_name, script)
 print "Where do you live, %s?" % user_name
 lives= raw_input(prompt)
@@ -24,11 +24,12 @@ def default_game():
     char_def_max=2
     char_def_divisor=2
     world="Sunriseland"
-default(game)
+default_game()
+world="Sunriseland"
 print "Welcome to the world of %s" % world
 def opus3_engine():
     validDirection=False
-    while validDirection=False
+    while validDirection==False:
         print """
         w: up
         a: left
@@ -40,8 +41,8 @@ def opus3_engine():
         location=roomx+','+roomy
         if direction == w:
             if roomx >= roomxmin and roomx <= roomxmax:
-            roomx=roomx+1
-            validDirection=True
+                roomx=roomx+1
+                validDirection=True
         elif direction == a:
             roomx=roomx-1
             validDirection=True
