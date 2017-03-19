@@ -3,7 +3,7 @@
 import random
 from os.path import exists
 location='~'
-#FIXME: Make this firstrun only and allow multiple inputs. Superlow priority.
+#FIXME: Allow multiple inputs. Superlow priority.
 #This is the suggested way by the FSF to show
 #GPL info, pythonified and modified slightly.
 if exists('.runbefore')==False:
@@ -167,43 +167,7 @@ print "What's your name?"
 user_name=raw_input("pre@opus3console:pre$ ")
 prompt=user_name+'@opus3console:'+location+"$ "
 def gameinit():
-    #FIXME: Developers should not have to define every variable as global.
-    #FIXME: Add coordinate-specific variables.
-    #FIXME: Allow variables to be loaded from files.
-    global roomx
-    global roomy
-    global roomxmax
-    global roomxmin
-    global roomymax
-    global roomymin
-    global char_hp
-    global char_atk_divisor
-    global char_atk_max
-    global char_atk_min
-    global char_def_divisor
-    global char_def_max
-    global world
-    global koboldDefeated #game specific
-    global gotKey #game specific
-    global gameDone
-    gameDone=False
-    roomx=0
-    roomy=0
-    roomxmax=2
-    roomxmin=-2
-    roomymax=roomxmax
-    roomymin=roomxmin
-    char_hp=20
-    char_atk_min=1
-    char_atk_max=5
-    char_atk_divisor=1
-    char_def_min=0
-    char_def_max=2
-    char_def_divisor=2
-    world="Opus 3 Demo"
-    #game specific variables
-    koboldDefeated=False
-    gotKey=False
+    exec(open('o3gameinit.py').read(), globals())
 gameinit()
 def fight():
     global roomx
@@ -259,50 +223,7 @@ def fight():
     else:
         print "You win, with %d HP remaining." % char_hp
 def coordOptions():
-    global roomx
-    global roomy
-    global roomxmax
-    global roomxmin
-    global roomymax
-    global roomymin
-    global char_hp
-    global char_atk_divisor
-    global char_atk_max
-    global char_atk_min
-    global char_def_divisor
-    global char_def_max
-    global enemy
-    global enem_hp
-    global enem_atk_divisor
-    global enem_atk_max
-    global enem_atk_min
-    global enem_def_divisor
-    global enem_def_max
-    global enem_def_min
-    global world
-    global gotKey
-    global koboldDefeated
-    global gameDone
-    #Reference fight script
-    if roomx==1 and roomy==0 and koboldDefeated==False:
-        enemy="Kobold"
-        enem_hp=10
-        enem_atk_min=5
-        enem_atk_max=8
-        enem_atk_divisor=2
-        enem_def_min=0
-        enem_def_min=2
-        enem_def_divisor=1
-        fight()
-        koboldDefeated=True
-    #Reference quest
-    if roomx==0 and roomy==-3 and gotKey==False:
-        print "You found the key to the Warden's Chest!"
-        gotKey=True
-    if roomx==3 and roomy==2 and gotKey==True:
-        print "As you place the key into the keyhole, the dungeon wall"
-        print "crumbles and the town of Demolia is in front of you."
-        gameDone=True
+    exec(open('o3coordoptions.py').read(), globals())
 print "Welcome to the world of %s" % world
 def opus3_engine():
     global roomx
