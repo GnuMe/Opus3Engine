@@ -9,7 +9,10 @@ prompt=user_name+'@opus3console:'+location+"$ "
 print "Hello, %s. Welcome to %s." % (user_name, script)
 print "Where do you live, %s?" % user_name
 lives= raw_input(prompt)
-def default_game():
+def gameinit():
+    #FIXME: Developers should not have to define every variable as global.
+    #FIXME: Add coordinate-specific variables.
+    #FIXME: Allow variables to be loaded from files.
     global roomx
     global roomy
     global roomxmax
@@ -37,10 +40,11 @@ def default_game():
     char_def_max=2
     char_def_divisor=2
     world="Sunriseland"
-default_game()
+gameinit()
 print "Welcome to the world of %s" % world
 def opus3_engine():
     validDirection=False
+    #FIXME: Add extra while statement to recur this and use coordinate-specific variables.
     while validDirection==False:
         print """
         w: up
@@ -67,5 +71,4 @@ def opus3_engine():
         else:
             print "Invalid."
     location=roomx+','+roomy
-    
         
