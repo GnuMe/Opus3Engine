@@ -3,9 +3,6 @@
 import random
 from os.path import exists
 location='~'
-#FIXME: Allow multiple inputs. Superlow priority.
-#This is the suggested way by the FSF to show
-#GPL info, pythonified and modified slightly.
 if exists('.runbefore')==False:
     with open(".runbefore","a+") as f:
         f.write("Delete this only if you want to see the license thing again")
