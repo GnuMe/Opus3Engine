@@ -102,7 +102,6 @@ def opus3_engine():
             if roomx <= roomxmax:
                 roomx=roomx+1
                 validDirection=True
-                coordOptions()
             else:
                 print "You slammed yourself into a wall."
                 char_hp=char_hp-1
@@ -110,7 +109,6 @@ def opus3_engine():
             if roomx >= roomxmin:
                 roomx=roomx-1
                 validDirection=True
-                coordOptions()
             else:
                 print "You slammed yourself into a wall."
                 char_hp=char_hp-1
@@ -118,7 +116,6 @@ def opus3_engine():
             if roomy >= roomymin:
                 roomy=roomy-1
                 validDirection=True
-                coordOptions()
             else:
                 print "You slammed yourself into a wall."
                 char_hp=char_hp-1
@@ -126,7 +123,6 @@ def opus3_engine():
             if roomy <= roomymax:
                 roomy=roomy+1
                 validDirection=True
-                coordOptions()
             else:
                 print "You slammed yourself into a wall."
                 char_hp=char_hp-1
