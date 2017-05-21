@@ -37,9 +37,9 @@ while opus3.isOn==True:
             koboldDefeated=True
         #Reference quest
         if roomx==0 and roomy==-3 and gotKey==False:
-        print "You found the key to the Warden's Chest!"
-        gotKey=True
+            print "You found the key to the Warden's Chest!"
+            gotKey=True
         if roomx==3 and roomy==2 and gotKey==True:
-        print "As you place the key into the keyhole, the dungeon wall"
-        print "crumbles and the town of Demolia is in front of you."
-        opus3.isOn=False 
+            print "As you place the key into the keyhole, the dungeon wall"
+            print "crumbles and the town of Demolia is in front of you."
+            opus3.isOn=False 
