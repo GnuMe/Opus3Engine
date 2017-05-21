@@ -21,7 +21,7 @@ opus3.world="Opus 3 Demo"
 koboldDefeated=False
 gotKey=False
 opus3.initprompt()
-while opus3.isOn=True:
+while opus3.isOn==True:
     opus3.main()
     if validDirection=True:
         if roomx==1 and roomy==0 and koboldDefeated==False:
