@@ -25,15 +25,15 @@ while opus3.isOn==True:
     opus3.main()
     if validDirection==True:
         if roomx==1 and roomy==0 and koboldDefeated==False:
-        enemy="Kobold"
-        enem_hp=10
-        enem_atk_min=5
-        enem_atk_max=8
-        enem_atk_divisor=2
-        enem_def_min=0
-        enem_def_min=2
-        enem_def_divisor=1
-        fight()
+            enemy="Kobold"
+            enem_hp=10
+            enem_atk_min=5
+            enem_atk_max=8
+            enem_atk_divisor=2
+            enem_def_min=0
+            enem_def_min=2
+            enem_def_divisor=1
+            fight()
         koboldDefeated=True
     #Reference quest
     if roomx==0 and roomy==-3 and gotKey==False:
